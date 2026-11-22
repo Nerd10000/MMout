@@ -1,0 +1,43 @@
+/*    */ package net.minecraft.core.dispenser;
+/*    */ 
+/*    */ import java.util.List;
+/*    */ import net.minecraft.core.BlockPos;
+/*    */ import net.minecraft.core.Direction;
+/*    */ import net.minecraft.world.entity.EquipmentSlot;
+/*    */ import net.minecraft.world.entity.LivingEntity;
+/*    */ import net.minecraft.world.entity.Mob;
+/*    */ import net.minecraft.world.item.ItemStack;
+/*    */ import net.minecraft.world.level.block.DispenserBlock;
+/*    */ import net.minecraft.world.level.block.state.properties.Property;
+/*    */ import net.minecraft.world.phys.AABB;
+/*    */ 
+/*    */ public class EquipmentDispenseItemBehavior extends DefaultDispenseItemBehavior {
+/* 14 */   public static final EquipmentDispenseItemBehavior INSTANCE = new EquipmentDispenseItemBehavior();
+/*    */   
+/*    */   protected ItemStack execute(BlockSource source, ItemStack dispensed) {
+/* 18 */     return dispenseEquipment(source, dispensed) ? dispensed : super.execute(source, dispensed);
+/*    */   }
+/*    */   
+/*    */   public static boolean dispenseEquipment(BlockSource source, ItemStack dispensed) {
+/* 22 */     BlockPos pos = source.pos().relative((Direction)source.state().getValue((Property)DispenserBlock.FACING));
+/* 24 */     List<LivingEntity> entities = source.level().getEntitiesOfClass(LivingEntity.class, new AABB(pos), entity -> entity.canEquipWithDispenser(dispensed));
+/* 25 */     if (entities.isEmpty())
+/* 26 */       return false; 
+/* 29 */     LivingEntity target = entities.getFirst();
+/* 30 */     EquipmentSlot slot = target.getEquipmentSlotForItem(dispensed);
+/* 32 */     ItemStack equip = dispensed.split(1);
+/* 33 */     target.setItemSlot(slot, equip);
+/* 34 */     if (target instanceof Mob) {
+/* 34 */       Mob targetMob = (Mob)target;
+/* 35 */       targetMob.setGuaranteedDrop(slot);
+/* 36 */       targetMob.setPersistenceRequired();
+/*    */     } 
+/* 38 */     return true;
+/*    */   }
+/*    */ }
+
+
+/* Location:              C:\Users\karol\AppData\Roaming\ModrinthApp\meta\versions\26.2-0.19.5\26.2-0.19.5.jar!\net\minecraft\core\dispenser\EquipmentDispenseItemBehavior.class
+ * Java compiler version: 25 (69.0)
+ * JD-Core Version:       1.1.3
+ */

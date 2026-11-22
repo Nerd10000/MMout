@@ -1,0 +1,77 @@
+/*     */ package net.minecraft.client.multiplayer;
+/*     */ 
+/*     */ import java.net.URL;
+/*     */ import java.util.UUID;
+/*     */ 
+/*     */ final class PendingRequest extends Record {
+/*     */   private final UUID id;
+/*     */   
+/*     */   private final URL url;
+/*     */   
+/*     */   private final String hash;
+/*     */   
+/*     */   private PendingRequest(UUID id, URL url, String hash) {
+/* 442 */     this.id = id;
+/* 442 */     this.url = url;
+/* 442 */     this.hash = hash;
+/*     */   }
+/*     */   
+/*     */   public final String toString() {
+/*     */     // Byte code:
+/*     */     //   0: aload_0
+/*     */     //   1: <illegal opcode> toString : (Lnet/minecraft/client/multiplayer/ClientCommonPacketListenerImpl$PackConfirmScreen$PendingRequest;)Ljava/lang/String;
+/*     */     //   6: areturn
+/*     */     // Line number table:
+/*     */     //   Java source line number -> byte code offset
+/*     */     //   #442	-> 0
+/*     */     // Local variable table:
+/*     */     //   start	length	slot	name	descriptor
+/*     */     //   0	7	0	this	Lnet/minecraft/client/multiplayer/ClientCommonPacketListenerImpl$PackConfirmScreen$PendingRequest;
+/*     */   }
+/*     */   
+/*     */   public final int hashCode() {
+/*     */     // Byte code:
+/*     */     //   0: aload_0
+/*     */     //   1: <illegal opcode> hashCode : (Lnet/minecraft/client/multiplayer/ClientCommonPacketListenerImpl$PackConfirmScreen$PendingRequest;)I
+/*     */     //   6: ireturn
+/*     */     // Line number table:
+/*     */     //   Java source line number -> byte code offset
+/*     */     //   #442	-> 0
+/*     */     // Local variable table:
+/*     */     //   start	length	slot	name	descriptor
+/*     */     //   0	7	0	this	Lnet/minecraft/client/multiplayer/ClientCommonPacketListenerImpl$PackConfirmScreen$PendingRequest;
+/*     */   }
+/*     */   
+/*     */   public final boolean equals(Object o) {
+/*     */     // Byte code:
+/*     */     //   0: aload_0
+/*     */     //   1: aload_1
+/*     */     //   2: <illegal opcode> equals : (Lnet/minecraft/client/multiplayer/ClientCommonPacketListenerImpl$PackConfirmScreen$PendingRequest;Ljava/lang/Object;)Z
+/*     */     //   7: ireturn
+/*     */     // Line number table:
+/*     */     //   Java source line number -> byte code offset
+/*     */     //   #442	-> 0
+/*     */     // Local variable table:
+/*     */     //   start	length	slot	name	descriptor
+/*     */     //   0	8	0	this	Lnet/minecraft/client/multiplayer/ClientCommonPacketListenerImpl$PackConfirmScreen$PendingRequest;
+/*     */     //   0	8	1	o	Ljava/lang/Object;
+/*     */   }
+/*     */   
+/*     */   public UUID id() {
+/* 442 */     return this.id;
+/*     */   }
+/*     */   
+/*     */   public URL url() {
+/* 442 */     return this.url;
+/*     */   }
+/*     */   
+/*     */   public String hash() {
+/* 442 */     return this.hash;
+/*     */   }
+/*     */ }
+
+
+/* Location:              C:\Users\karol\AppData\Roaming\ModrinthApp\meta\versions\26.2-0.19.5\26.2-0.19.5.jar!\net\minecraft\client\multiplayer\ClientCommonPacketListenerImpl$PackConfirmScreen$PendingRequest.class
+ * Java compiler version: 25 (69.0)
+ * JD-Core Version:       1.1.3
+ */

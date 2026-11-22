@@ -1,0 +1,88 @@
+/*     */ package net.minecraft.world.level.levelgen.structure.structures;
+/*     */ 
+/*     */ import net.minecraft.core.BlockPos;
+/*     */ import net.minecraft.core.Vec3i;
+/*     */ import net.minecraft.nbt.CompoundTag;
+/*     */ import net.minecraft.resources.Identifier;
+/*     */ import net.minecraft.util.RandomSource;
+/*     */ import net.minecraft.world.level.ChunkPos;
+/*     */ import net.minecraft.world.level.ServerLevelAccessor;
+/*     */ import net.minecraft.world.level.StructureManager;
+/*     */ import net.minecraft.world.level.WorldGenLevel;
+/*     */ import net.minecraft.world.level.block.Blocks;
+/*     */ import net.minecraft.world.level.block.Mirror;
+/*     */ import net.minecraft.world.level.block.Rotation;
+/*     */ import net.minecraft.world.level.block.entity.BlockEntity;
+/*     */ import net.minecraft.world.level.block.entity.ChestBlockEntity;
+/*     */ import net.minecraft.world.level.block.state.BlockState;
+/*     */ import net.minecraft.world.level.chunk.ChunkGenerator;
+/*     */ import net.minecraft.world.level.levelgen.Heightmap;
+/*     */ import net.minecraft.world.level.levelgen.structure.BoundingBox;
+/*     */ import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
+/*     */ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+/*     */ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
+/*     */ import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
+/*     */ import net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSettings;
+/*     */ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+/*     */ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+/*     */ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+/*     */ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+/*     */ import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+/*     */ 
+/*     */ public class IglooPiece extends TemplateStructurePiece {
+/*     */   public IglooPiece(StructureTemplateManager structureTemplateManager, Identifier templateLocation, BlockPos position, Rotation rotation, int depth) {
+/*  68 */     super(StructurePieceType.IGLOO, 0, structureTemplateManager, templateLocation, templateLocation.toString(), makeSettings(rotation, templateLocation), makePosition(templateLocation, position, depth));
+/*     */   }
+/*     */   
+/*     */   public IglooPiece(StructureTemplateManager structureTemplateManager, CompoundTag tag) {
+/*  72 */     super(StructurePieceType.IGLOO, tag, structureTemplateManager, location -> makeSettings(tag.read("Rot", Rotation.LEGACY_CODEC).orElseThrow(), location));
+/*     */   }
+/*     */   
+/*     */   private static StructurePlaceSettings makeSettings(Rotation rotation, Identifier templateLocation) {
+/*  76 */     return (new StructurePlaceSettings()).setRotation(rotation).setMirror(Mirror.NONE).setRotationPivot(IglooPieces.PIVOTS.get(templateLocation)).addProcessor((StructureProcessor)BlockIgnoreProcessor.STRUCTURE_BLOCK).setLiquidSettings(LiquidSettings.IGNORE_WATERLOGGING);
+/*     */   }
+/*     */   
+/*     */   private static BlockPos makePosition(Identifier templateLocation, BlockPos position, int depth) {
+/*  80 */     return position.offset((Vec3i)IglooPieces.OFFSETS.get(templateLocation)).below(depth);
+/*     */   }
+/*     */   
+/*     */   protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
+/*  85 */     super.addAdditionalSaveData(context, tag);
+/*  86 */     tag.store("Rot", Rotation.LEGACY_CODEC, this.placeSettings.getRotation());
+/*     */   }
+/*     */   
+/*     */   protected void handleDataMarker(String markerId, BlockPos position, ServerLevelAccessor level, RandomSource random, BoundingBox chunkBB) {
+/*  91 */     if (!"chest".equals(markerId))
+/*     */       return; 
+/*  95 */     level.setBlock(position, Blocks.AIR.defaultBlockState(), 3);
+/*  96 */     BlockEntity chest = level.getBlockEntity(position.below());
+/*  97 */     if (chest instanceof ChestBlockEntity) {
+/*  97 */       ChestBlockEntity chestBlockEntity = (ChestBlockEntity)chest;
+/*  98 */       chestBlockEntity.setLootTable(BuiltInLootTables.IGLOO_CHEST, random.nextLong());
+/*     */     } 
+/*     */   }
+/*     */   
+/*     */   public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox chunkBB, ChunkPos chunkPos, BlockPos referencePos) {
+/* 104 */     Identifier templateLocation = Identifier.parse(this.templateName);
+/* 106 */     StructurePlaceSettings settings = makeSettings(this.placeSettings.getRotation(), templateLocation);
+/* 108 */     BlockPos offset = IglooPieces.OFFSETS.get(templateLocation);
+/* 109 */     BlockPos entrancePos = this.templatePosition.offset((Vec3i)StructureTemplate.calculateRelativePosition(settings, new BlockPos(3 - offset.getX(), 0, -offset.getZ())));
+/* 110 */     int height = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, entrancePos.getX(), entrancePos.getZ());
+/* 111 */     BlockPos oldTemplatePos = this.templatePosition;
+/* 112 */     this.templatePosition = this.templatePosition.offset(0, height - 90 - 1, 0);
+/* 114 */     super.postProcess(level, structureManager, generator, random, chunkBB, chunkPos, referencePos);
+/* 116 */     if (templateLocation.equals(IglooPieces.STRUCTURE_LOCATION_IGLOO)) {
+/* 117 */       BlockPos trapDoorPos = this.templatePosition.offset((Vec3i)StructureTemplate.calculateRelativePosition(settings, new BlockPos(3, 0, 5)));
+/* 118 */       BlockState belowState = level.getBlockState(trapDoorPos.below());
+/* 119 */       if (!belowState.isAir() && !belowState.is(Blocks.LADDER))
+/* 120 */         level.setBlock(trapDoorPos, Blocks.SNOW_BLOCK.defaultBlockState(), 3); 
+/*     */     } 
+/* 124 */     this.templatePosition = oldTemplatePos;
+/*     */   }
+/*     */ }
+
+
+/* Location:              C:\Users\karol\AppData\Roaming\ModrinthApp\meta\versions\26.2-0.19.5\26.2-0.19.5.jar!\net\minecraft\world\level\levelgen\structure\structures\IglooPieces$IglooPiece.class
+ * Java compiler version: 25 (69.0)
+ * JD-Core Version:       1.1.3
+ */

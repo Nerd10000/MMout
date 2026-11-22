@@ -1,0 +1,19 @@
+/*    */ package net.minecraft.network.protocol.status;
+/*    */ 
+/*    */ import net.minecraft.network.ConnectionProtocol;
+/*    */ import net.minecraft.network.protocol.game.ServerPacketListener;
+/*    */ import net.minecraft.network.protocol.ping.ServerPingPacketListener;
+/*    */ 
+/*    */ public interface ServerStatusPacketListener extends ServerPacketListener, ServerPingPacketListener {
+/*    */   default ConnectionProtocol protocol() {
+/* 10 */     return ConnectionProtocol.STATUS;
+/*    */   }
+/*    */   
+/*    */   void handleStatusRequest(ServerboundStatusRequestPacket paramServerboundStatusRequestPacket);
+/*    */ }
+
+
+/* Location:              C:\Users\karol\AppData\Roaming\ModrinthApp\meta\versions\26.2-0.19.5\26.2-0.19.5.jar!\net\minecraft\network\protocol\status\ServerStatusPacketListener.class
+ * Java compiler version: 25 (69.0)
+ * JD-Core Version:       1.1.3
+ */

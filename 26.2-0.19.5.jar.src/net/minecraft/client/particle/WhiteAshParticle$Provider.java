@@ -1,0 +1,27 @@
+/*    */ package net.minecraft.client.particle;
+/*    */ 
+/*    */ import net.minecraft.client.multiplayer.ClientLevel;
+/*    */ import net.minecraft.core.particles.ParticleOptions;
+/*    */ import net.minecraft.core.particles.SimpleParticleType;
+/*    */ import net.minecraft.util.RandomSource;
+/*    */ 
+/*    */ public class Provider implements ParticleProvider<SimpleParticleType> {
+/*    */   private final SpriteSet sprites;
+/*    */   
+/*    */   public Provider(SpriteSet sprites) {
+/* 22 */     this.sprites = sprites;
+/*    */   }
+/*    */   
+/*    */   public Particle createParticle(SimpleParticleType options, ClientLevel level, double x, double y, double z, double xAux, double yAux, double zAux, RandomSource random) {
+/* 27 */     double xa = random.nextFloat() * -1.9D * random.nextFloat() * 0.1D;
+/* 28 */     double ya = random.nextFloat() * -0.5D * random.nextFloat() * 0.1D * 5.0D;
+/* 29 */     double za = random.nextFloat() * -1.9D * random.nextFloat() * 0.1D;
+/* 30 */     return new WhiteAshParticle(level, x, y, z, xa, ya, za, 1.0F, this.sprites);
+/*    */   }
+/*    */ }
+
+
+/* Location:              C:\Users\karol\AppData\Roaming\ModrinthApp\meta\versions\26.2-0.19.5\26.2-0.19.5.jar!\net\minecraft\client\particle\WhiteAshParticle$Provider.class
+ * Java compiler version: 25 (69.0)
+ * JD-Core Version:       1.1.3
+ */

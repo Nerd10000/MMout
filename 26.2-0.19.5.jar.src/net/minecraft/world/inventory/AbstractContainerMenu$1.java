@@ -1,0 +1,21 @@
+/*     */ package net.minecraft.world.inventory;
+/*     */ 
+/*     */ import net.minecraft.world.entity.SlotAccess;
+/*     */ import net.minecraft.world.item.ItemStack;
+/*     */ 
+/*     */ class null implements SlotAccess {
+/*     */   public ItemStack get() {
+/* 599 */     return AbstractContainerMenu.this.getCarried();
+/*     */   }
+/*     */   
+/*     */   public boolean set(ItemStack itemStack) {
+/* 604 */     AbstractContainerMenu.this.setCarried(itemStack);
+/* 605 */     return true;
+/*     */   }
+/*     */ }
+
+
+/* Location:              C:\Users\karol\AppData\Roaming\ModrinthApp\meta\versions\26.2-0.19.5\26.2-0.19.5.jar!\net\minecraft\world\inventory\AbstractContainerMenu$1.class
+ * Java compiler version: 25 (69.0)
+ * JD-Core Version:       1.1.3
+ */

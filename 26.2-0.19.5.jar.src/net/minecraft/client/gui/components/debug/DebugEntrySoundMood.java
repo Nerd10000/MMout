@@ -1,0 +1,20 @@
+/*    */ package net.minecraft.client.gui.components.debug;
+/*    */ 
+/*    */ import net.minecraft.client.Minecraft;
+/*    */ import net.minecraft.world.level.Level;
+/*    */ import net.minecraft.world.level.chunk.LevelChunk;
+/*    */ 
+/*    */ public class DebugEntrySoundMood implements DebugScreenEntry {
+/*    */   public void display(DebugScreenDisplayer displayer, Level serverOrClientLevel, LevelChunk clientChunk, LevelChunk serverChunk) {
+/* 13 */     Minecraft minecraft = Minecraft.getInstance();
+/* 14 */     if (minecraft.player == null)
+/*    */       return; 
+/* 18 */     displayer.addLine(minecraft.getSoundManager().getChannelDebugString() + minecraft.getSoundManager().getChannelDebugString());
+/*    */   }
+/*    */ }
+
+
+/* Location:              C:\Users\karol\AppData\Roaming\ModrinthApp\meta\versions\26.2-0.19.5\26.2-0.19.5.jar!\net\minecraft\client\gui\components\debug\DebugEntrySoundMood.class
+ * Java compiler version: 25 (69.0)
+ * JD-Core Version:       1.1.3
+ */

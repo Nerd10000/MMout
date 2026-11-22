@@ -1,0 +1,82 @@
+/*    */ package net.minecraft.world.level.levelgen.feature.configurations;
+/*    */ 
+/*    */ import com.mojang.datafixers.kinds.App;
+/*    */ import com.mojang.datafixers.kinds.Applicative;
+/*    */ import com.mojang.serialization.Codec;
+/*    */ import com.mojang.serialization.codecs.RecordCodecBuilder;
+/*    */ import java.util.function.BiFunction;
+/*    */ import net.minecraft.util.valueproviders.IntProvider;
+/*    */ import net.minecraft.util.valueproviders.IntProviders;
+/*    */ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+/*    */ 
+/*    */ public final class Layer extends Record {
+/*    */   private final IntProvider height;
+/*    */   
+/*    */   private final BlockStateProvider state;
+/*    */   
+/*    */   public static final Codec<Layer> CODEC;
+/*    */   
+/*    */   public Layer(IntProvider height, BlockStateProvider state) {
+/* 22 */     this.height = height;
+/* 22 */     this.state = state;
+/*    */   }
+/*    */   
+/*    */   public final String toString() {
+/*    */     // Byte code:
+/*    */     //   0: aload_0
+/*    */     //   1: <illegal opcode> toString : (Lnet/minecraft/world/level/levelgen/feature/configurations/BlockColumnConfiguration$Layer;)Ljava/lang/String;
+/*    */     //   6: areturn
+/*    */     // Line number table:
+/*    */     //   Java source line number -> byte code offset
+/*    */     //   #22	-> 0
+/*    */     // Local variable table:
+/*    */     //   start	length	slot	name	descriptor
+/*    */     //   0	7	0	this	Lnet/minecraft/world/level/levelgen/feature/configurations/BlockColumnConfiguration$Layer;
+/*    */   }
+/*    */   
+/*    */   public final int hashCode() {
+/*    */     // Byte code:
+/*    */     //   0: aload_0
+/*    */     //   1: <illegal opcode> hashCode : (Lnet/minecraft/world/level/levelgen/feature/configurations/BlockColumnConfiguration$Layer;)I
+/*    */     //   6: ireturn
+/*    */     // Line number table:
+/*    */     //   Java source line number -> byte code offset
+/*    */     //   #22	-> 0
+/*    */     // Local variable table:
+/*    */     //   start	length	slot	name	descriptor
+/*    */     //   0	7	0	this	Lnet/minecraft/world/level/levelgen/feature/configurations/BlockColumnConfiguration$Layer;
+/*    */   }
+/*    */   
+/*    */   public final boolean equals(Object o) {
+/*    */     // Byte code:
+/*    */     //   0: aload_0
+/*    */     //   1: aload_1
+/*    */     //   2: <illegal opcode> equals : (Lnet/minecraft/world/level/levelgen/feature/configurations/BlockColumnConfiguration$Layer;Ljava/lang/Object;)Z
+/*    */     //   7: ireturn
+/*    */     // Line number table:
+/*    */     //   Java source line number -> byte code offset
+/*    */     //   #22	-> 0
+/*    */     // Local variable table:
+/*    */     //   start	length	slot	name	descriptor
+/*    */     //   0	8	0	this	Lnet/minecraft/world/level/levelgen/feature/configurations/BlockColumnConfiguration$Layer;
+/*    */     //   0	8	1	o	Ljava/lang/Object;
+/*    */   }
+/*    */   
+/*    */   public IntProvider height() {
+/* 22 */     return this.height;
+/*    */   }
+/*    */   
+/*    */   public BlockStateProvider state() {
+/* 22 */     return this.state;
+/*    */   }
+/*    */   
+/*    */   static {
+/* 23 */     CODEC = RecordCodecBuilder.create(i -> i.group((App)IntProviders.NON_NEGATIVE_CODEC.fieldOf("height").forGetter(Layer::height), (App)BlockStateProvider.CODEC.fieldOf("provider").forGetter(Layer::state)).apply((Applicative)i, Layer::new));
+/*    */   }
+/*    */ }
+
+
+/* Location:              C:\Users\karol\AppData\Roaming\ModrinthApp\meta\versions\26.2-0.19.5\26.2-0.19.5.jar!\net\minecraft\world\level\levelgen\feature\configurations\BlockColumnConfiguration$Layer.class
+ * Java compiler version: 25 (69.0)
+ * JD-Core Version:       1.1.3
+ */

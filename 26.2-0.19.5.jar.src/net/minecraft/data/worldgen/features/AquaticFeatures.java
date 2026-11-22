@@ -1,0 +1,48 @@
+/*    */ package net.minecraft.data.worldgen.features;
+/*    */ 
+/*    */ import net.minecraft.core.Holder;
+/*    */ import net.minecraft.core.HolderSet;
+/*    */ import net.minecraft.data.worldgen.BootstrapContext;
+/*    */ import net.minecraft.data.worldgen.placement.PlacementUtils;
+/*    */ import net.minecraft.resources.ResourceKey;
+/*    */ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+/*    */ import net.minecraft.world.level.levelgen.feature.Feature;
+/*    */ import net.minecraft.world.level.levelgen.feature.configurations.CompositeFeatureConfiguration;
+/*    */ import net.minecraft.world.level.levelgen.feature.configurations.CountConfiguration;
+/*    */ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+/*    */ import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeatureConfiguration;
+/*    */ 
+/*    */ public class AquaticFeatures {
+/* 15 */   public static final ResourceKey<ConfiguredFeature<?, ?>> SEAGRASS_SHORT = FeatureUtils.createKey("seagrass_short");
+/*    */   
+/* 16 */   public static final ResourceKey<ConfiguredFeature<?, ?>> SEAGRASS_SLIGHTLY_LESS_SHORT = FeatureUtils.createKey("seagrass_slightly_less_short");
+/*    */   
+/* 17 */   public static final ResourceKey<ConfiguredFeature<?, ?>> SEAGRASS_MID = FeatureUtils.createKey("seagrass_mid");
+/*    */   
+/* 18 */   public static final ResourceKey<ConfiguredFeature<?, ?>> SEAGRASS_TALL = FeatureUtils.createKey("seagrass_tall");
+/*    */   
+/* 20 */   public static final ResourceKey<ConfiguredFeature<?, ?>> SEA_PICKLE = FeatureUtils.createKey("sea_pickle");
+/*    */   
+/* 22 */   public static final ResourceKey<ConfiguredFeature<?, ?>> KELP = FeatureUtils.createKey("kelp");
+/*    */   
+/* 24 */   public static final ResourceKey<ConfiguredFeature<?, ?>> WARM_OCEAN_VEGETATION = FeatureUtils.createKey("warm_ocean_vegetation");
+/*    */   
+/*    */   public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+/* 29 */     FeatureUtils.register(context, SEAGRASS_SHORT, Feature.SEAGRASS, new ProbabilityFeatureConfiguration(0.3F));
+/* 30 */     FeatureUtils.register(context, SEAGRASS_SLIGHTLY_LESS_SHORT, Feature.SEAGRASS, new ProbabilityFeatureConfiguration(0.4F));
+/* 31 */     FeatureUtils.register(context, SEAGRASS_MID, Feature.SEAGRASS, new ProbabilityFeatureConfiguration(0.6F));
+/* 32 */     FeatureUtils.register(context, SEAGRASS_TALL, Feature.SEAGRASS, new ProbabilityFeatureConfiguration(0.8F));
+/* 34 */     FeatureUtils.register(context, SEA_PICKLE, Feature.SEA_PICKLE, new CountConfiguration(20));
+/* 36 */     FeatureUtils.register(context, KELP, Feature.KELP);
+/* 38 */     FeatureUtils.register(context, WARM_OCEAN_VEGETATION, Feature.SIMPLE_RANDOM_SELECTOR, new CompositeFeatureConfiguration(
+/* 39 */           (HolderSet)HolderSet.direct(new Holder[] { PlacementUtils.inlinePlaced(Feature.CORAL_TREE, (FeatureConfiguration)FeatureConfiguration.NONE, new net.minecraft.world.level.levelgen.placement.PlacementModifier[0]), 
+/* 41 */               PlacementUtils.inlinePlaced(Feature.CORAL_CLAW, (FeatureConfiguration)FeatureConfiguration.NONE, new net.minecraft.world.level.levelgen.placement.PlacementModifier[0]), 
+/* 42 */               PlacementUtils.inlinePlaced(Feature.CORAL_MUSHROOM, (FeatureConfiguration)FeatureConfiguration.NONE, new net.minecraft.world.level.levelgen.placement.PlacementModifier[0]) })));
+/*    */   }
+/*    */ }
+
+
+/* Location:              C:\Users\karol\AppData\Roaming\ModrinthApp\meta\versions\26.2-0.19.5\26.2-0.19.5.jar!\net\minecraft\data\worldgen\features\AquaticFeatures.class
+ * Java compiler version: 25 (69.0)
+ * JD-Core Version:       1.1.3
+ */

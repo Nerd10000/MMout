@@ -1,0 +1,49 @@
+/*    */ package net.minecraft.world.level.block;
+/*    */ 
+/*    */ import com.mojang.datafixers.kinds.App;
+/*    */ import com.mojang.datafixers.kinds.Applicative;
+/*    */ import com.mojang.serialization.MapCodec;
+/*    */ import com.mojang.serialization.codecs.RecordCodecBuilder;
+/*    */ import java.util.function.BiFunction;
+/*    */ import net.minecraft.core.BlockPos;
+/*    */ import net.minecraft.server.level.ServerLevel;
+/*    */ import net.minecraft.util.RandomSource;
+/*    */ import net.minecraft.world.level.block.state.BlockBehaviour;
+/*    */ import net.minecraft.world.level.block.state.BlockState;
+/*    */ 
+/*    */ public class WeatheringLightningRodBlock extends LightningRodBlock implements WeatheringCopper {
+/*    */   public static final MapCodec<WeatheringLightningRodBlock> CODEC;
+/*    */   
+/*    */   private final WeatheringCopper.WeatherState weatherState;
+/*    */   
+/*    */   static {
+/* 11 */     CODEC = RecordCodecBuilder.mapCodec(i -> i.group((App)WeatheringCopper.WeatherState.CODEC.fieldOf("weathering_state").forGetter(WeatheringLightningRodBlock::getAge), (App)propertiesCodec()).apply((Applicative)i, WeatheringLightningRodBlock::new));
+/*    */   }
+/*    */   
+/*    */   public MapCodec<WeatheringLightningRodBlock> codec() {
+/* 18 */     return CODEC;
+/*    */   }
+/*    */   
+/*    */   protected WeatheringLightningRodBlock(WeatheringCopper.WeatherState weatherState, BlockBehaviour.Properties properties) {
+/* 24 */     super(properties);
+/* 25 */     this.weatherState = weatherState;
+/*    */   }
+/*    */   
+/*    */   protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+/* 30 */     changeOverTime(state, level, pos, random);
+/*    */   }
+/*    */   
+/*    */   protected boolean isRandomlyTicking(BlockState state) {
+/* 35 */     return WeatheringCopper.getNext(state.getBlock()).isPresent();
+/*    */   }
+/*    */   
+/*    */   public WeatheringCopper.WeatherState getAge() {
+/* 40 */     return this.weatherState;
+/*    */   }
+/*    */ }
+
+
+/* Location:              C:\Users\karol\AppData\Roaming\ModrinthApp\meta\versions\26.2-0.19.5\26.2-0.19.5.jar!\net\minecraft\world\level\block\WeatheringLightningRodBlock.class
+ * Java compiler version: 25 (69.0)
+ * JD-Core Version:       1.1.3
+ */

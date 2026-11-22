@@ -1,0 +1,83 @@
+/*   */ package net.minecraft.client.resources.server;
+/*   */ 
+/*   */ import java.nio.file.Path;
+/*   */ import java.util.List;
+/*   */ import java.util.UUID;
+/*   */ 
+/*   */ public interface PackReloadConfig {
+/*   */   void scheduleReload(Callbacks paramCallbacks);
+/*   */   
+/*   */   public static interface Callbacks {
+/*   */     void onSuccess();
+/*   */     
+/*   */     void onFailure(boolean param1Boolean);
+/*   */     
+/*   */     List<PackReloadConfig.IdAndPath> packsToLoad();
+/*   */   }
+/*   */   
+/*   */   public static final class IdAndPath extends Record {
+/*   */     private final UUID id;
+/*   */     
+/*   */     private final Path path;
+/*   */     
+/*   */     public IdAndPath(UUID id, Path path) {
+/* 8 */       this.id = id;
+/* 8 */       this.path = path;
+/*   */     }
+/*   */     
+/*   */     public final String toString() {
+/*   */       // Byte code:
+/*   */       //   0: aload_0
+/*   */       //   1: <illegal opcode> toString : (Lnet/minecraft/client/resources/server/PackReloadConfig$IdAndPath;)Ljava/lang/String;
+/*   */       //   6: areturn
+/*   */       // Line number table:
+/*   */       //   Java source line number -> byte code offset
+/*   */       //   #8	-> 0
+/*   */       // Local variable table:
+/*   */       //   start	length	slot	name	descriptor
+/*   */       //   0	7	0	this	Lnet/minecraft/client/resources/server/PackReloadConfig$IdAndPath;
+/*   */     }
+/*   */     
+/*   */     public final int hashCode() {
+/*   */       // Byte code:
+/*   */       //   0: aload_0
+/*   */       //   1: <illegal opcode> hashCode : (Lnet/minecraft/client/resources/server/PackReloadConfig$IdAndPath;)I
+/*   */       //   6: ireturn
+/*   */       // Line number table:
+/*   */       //   Java source line number -> byte code offset
+/*   */       //   #8	-> 0
+/*   */       // Local variable table:
+/*   */       //   start	length	slot	name	descriptor
+/*   */       //   0	7	0	this	Lnet/minecraft/client/resources/server/PackReloadConfig$IdAndPath;
+/*   */     }
+/*   */     
+/*   */     public final boolean equals(Object o) {
+/*   */       // Byte code:
+/*   */       //   0: aload_0
+/*   */       //   1: aload_1
+/*   */       //   2: <illegal opcode> equals : (Lnet/minecraft/client/resources/server/PackReloadConfig$IdAndPath;Ljava/lang/Object;)Z
+/*   */       //   7: ireturn
+/*   */       // Line number table:
+/*   */       //   Java source line number -> byte code offset
+/*   */       //   #8	-> 0
+/*   */       // Local variable table:
+/*   */       //   start	length	slot	name	descriptor
+/*   */       //   0	8	0	this	Lnet/minecraft/client/resources/server/PackReloadConfig$IdAndPath;
+/*   */       //   0	8	1	o	Ljava/lang/Object;
+/*   */     }
+/*   */     
+/*   */     public UUID id() {
+/* 8 */       return this.id;
+/*   */     }
+/*   */     
+/*   */     public Path path() {
+/* 8 */       return this.path;
+/*   */     }
+/*   */   }
+/*   */ }
+
+
+/* Location:              C:\Users\karol\AppData\Roaming\ModrinthApp\meta\versions\26.2-0.19.5\26.2-0.19.5.jar!\net\minecraft\client\resources\server\PackReloadConfig.class
+ * Java compiler version: 25 (69.0)
+ * JD-Core Version:       1.1.3
+ */

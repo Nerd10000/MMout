@@ -1,0 +1,26 @@
+/*    */ package net.minecraft.util.datafix.schemas;
+/*    */ 
+/*    */ import com.mojang.datafixers.DSL;
+/*    */ import com.mojang.datafixers.schemas.Schema;
+/*    */ import com.mojang.datafixers.types.templates.TypeTemplate;
+/*    */ import com.mojang.datafixers.util.Pair;
+/*    */ import java.util.Map;
+/*    */ import java.util.function.Supplier;
+/*    */ import net.minecraft.util.datafix.fixes.References;
+/*    */ 
+/*    */ public class V4312 extends NamespacedSchema {
+/*    */   public V4312(int versionKey, Schema parent) {
+/* 22 */     super(versionKey, parent);
+/*    */   }
+/*    */   
+/*    */   public void registerTypes(Schema schema, Map<String, Supplier<TypeTemplate>> entityTypes, Map<String, Supplier<TypeTemplate>> blockEntityTypes) {
+/* 27 */     super.registerTypes(schema, entityTypes, blockEntityTypes);
+/* 28 */     schema.registerType(false, References.PLAYER, () -> DSL.and(References.ENTITY_EQUIPMENT.in(schema), DSL.optionalFields(new Pair[] { Pair.of("RootVehicle", DSL.optionalFields("Entity", References.ENTITY_TREE.in(schema))), Pair.of("ender_pearls", DSL.list(References.ENTITY_TREE.in(schema))), Pair.of("Inventory", DSL.list(References.ITEM_STACK.in(schema))), Pair.of("EnderItems", DSL.list(References.ITEM_STACK.in(schema))), Pair.of("ShoulderEntityLeft", References.ENTITY_TREE.in(schema)), Pair.of("ShoulderEntityRight", References.ENTITY_TREE.in(schema)), Pair.of("recipeBook", DSL.optionalFields("recipes", DSL.list(References.RECIPE.in(schema)), "toBeDisplayed", DSL.list(References.RECIPE.in(schema)))) })));
+/*    */   }
+/*    */ }
+
+
+/* Location:              C:\Users\karol\AppData\Roaming\ModrinthApp\meta\versions\26.2-0.19.5\26.2-0.19.5.jar!\net\minecraf\\util\datafix\schemas\V4312.class
+ * Java compiler version: 25 (69.0)
+ * JD-Core Version:       1.1.3
+ */

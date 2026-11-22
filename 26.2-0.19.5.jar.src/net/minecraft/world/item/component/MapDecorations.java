@@ -1,0 +1,159 @@
+/*    */ package net.minecraft.world.item.component;
+/*    */ 
+/*    */ import com.mojang.datafixers.kinds.App;
+/*    */ import com.mojang.datafixers.kinds.Applicative;
+/*    */ import com.mojang.datafixers.util.Function4;
+/*    */ import com.mojang.serialization.Codec;
+/*    */ import com.mojang.serialization.codecs.RecordCodecBuilder;
+/*    */ import java.util.Map;
+/*    */ import java.util.function.Function;
+/*    */ import net.minecraft.core.Holder;
+/*    */ import net.minecraft.util.Util;
+/*    */ import net.minecraft.world.level.saveddata.maps.MapDecorationType;
+/*    */ 
+/*    */ public final class MapDecorations extends Record {
+/*    */   private final Map<String, Entry> decorations;
+/*    */   
+/*    */   public MapDecorations(Map<String, Entry> decorations) {
+/* 11 */     this.decorations = decorations;
+/*    */   }
+/*    */   
+/*    */   public final String toString() {
+/*    */     // Byte code:
+/*    */     //   0: aload_0
+/*    */     //   1: <illegal opcode> toString : (Lnet/minecraft/world/item/component/MapDecorations;)Ljava/lang/String;
+/*    */     //   6: areturn
+/*    */     // Line number table:
+/*    */     //   Java source line number -> byte code offset
+/*    */     //   #11	-> 0
+/*    */     // Local variable table:
+/*    */     //   start	length	slot	name	descriptor
+/*    */     //   0	7	0	this	Lnet/minecraft/world/item/component/MapDecorations;
+/*    */   }
+/*    */   
+/*    */   public final int hashCode() {
+/*    */     // Byte code:
+/*    */     //   0: aload_0
+/*    */     //   1: <illegal opcode> hashCode : (Lnet/minecraft/world/item/component/MapDecorations;)I
+/*    */     //   6: ireturn
+/*    */     // Line number table:
+/*    */     //   Java source line number -> byte code offset
+/*    */     //   #11	-> 0
+/*    */     // Local variable table:
+/*    */     //   start	length	slot	name	descriptor
+/*    */     //   0	7	0	this	Lnet/minecraft/world/item/component/MapDecorations;
+/*    */   }
+/*    */   
+/*    */   public final boolean equals(Object o) {
+/*    */     // Byte code:
+/*    */     //   0: aload_0
+/*    */     //   1: aload_1
+/*    */     //   2: <illegal opcode> equals : (Lnet/minecraft/world/item/component/MapDecorations;Ljava/lang/Object;)Z
+/*    */     //   7: ireturn
+/*    */     // Line number table:
+/*    */     //   Java source line number -> byte code offset
+/*    */     //   #11	-> 0
+/*    */     // Local variable table:
+/*    */     //   start	length	slot	name	descriptor
+/*    */     //   0	8	0	this	Lnet/minecraft/world/item/component/MapDecorations;
+/*    */     //   0	8	1	o	Ljava/lang/Object;
+/*    */   }
+/*    */   
+/*    */   public Map<String, Entry> decorations() {
+/* 11 */     return this.decorations;
+/*    */   }
+/*    */   
+/* 15 */   public static final MapDecorations EMPTY = new MapDecorations(Map.of());
+/*    */   
+/* 17 */   public static final Codec<MapDecorations> CODEC = Codec.unboundedMap((Codec)Codec.STRING, Entry.CODEC).xmap(MapDecorations::new, MapDecorations::decorations);
+/*    */   
+/*    */   public MapDecorations withDecoration(String id, Entry entry) {
+/* 20 */     return new MapDecorations(Util.copyAndPut(this.decorations, id, entry));
+/*    */   }
+/*    */   
+/*    */   public static final class Entry extends Record {
+/*    */     private final Holder<MapDecorationType> type;
+/*    */     
+/*    */     private final double x;
+/*    */     
+/*    */     private final double z;
+/*    */     
+/*    */     private final float rotation;
+/*    */     
+/*    */     public static final Codec<Entry> CODEC;
+/*    */     
+/*    */     public Entry(Holder<MapDecorationType> type, double x, double z, float rotation) {
+/* 23 */       this.type = type;
+/* 23 */       this.x = x;
+/* 23 */       this.z = z;
+/* 23 */       this.rotation = rotation;
+/*    */     }
+/*    */     
+/*    */     public final String toString() {
+/*    */       // Byte code:
+/*    */       //   0: aload_0
+/*    */       //   1: <illegal opcode> toString : (Lnet/minecraft/world/item/component/MapDecorations$Entry;)Ljava/lang/String;
+/*    */       //   6: areturn
+/*    */       // Line number table:
+/*    */       //   Java source line number -> byte code offset
+/*    */       //   #23	-> 0
+/*    */       // Local variable table:
+/*    */       //   start	length	slot	name	descriptor
+/*    */       //   0	7	0	this	Lnet/minecraft/world/item/component/MapDecorations$Entry;
+/*    */     }
+/*    */     
+/*    */     public final int hashCode() {
+/*    */       // Byte code:
+/*    */       //   0: aload_0
+/*    */       //   1: <illegal opcode> hashCode : (Lnet/minecraft/world/item/component/MapDecorations$Entry;)I
+/*    */       //   6: ireturn
+/*    */       // Line number table:
+/*    */       //   Java source line number -> byte code offset
+/*    */       //   #23	-> 0
+/*    */       // Local variable table:
+/*    */       //   start	length	slot	name	descriptor
+/*    */       //   0	7	0	this	Lnet/minecraft/world/item/component/MapDecorations$Entry;
+/*    */     }
+/*    */     
+/*    */     public final boolean equals(Object o) {
+/*    */       // Byte code:
+/*    */       //   0: aload_0
+/*    */       //   1: aload_1
+/*    */       //   2: <illegal opcode> equals : (Lnet/minecraft/world/item/component/MapDecorations$Entry;Ljava/lang/Object;)Z
+/*    */       //   7: ireturn
+/*    */       // Line number table:
+/*    */       //   Java source line number -> byte code offset
+/*    */       //   #23	-> 0
+/*    */       // Local variable table:
+/*    */       //   start	length	slot	name	descriptor
+/*    */       //   0	8	0	this	Lnet/minecraft/world/item/component/MapDecorations$Entry;
+/*    */       //   0	8	1	o	Ljava/lang/Object;
+/*    */     }
+/*    */     
+/*    */     public Holder<MapDecorationType> type() {
+/* 23 */       return this.type;
+/*    */     }
+/*    */     
+/*    */     public double x() {
+/* 23 */       return this.x;
+/*    */     }
+/*    */     
+/*    */     public double z() {
+/* 23 */       return this.z;
+/*    */     }
+/*    */     
+/*    */     public float rotation() {
+/* 23 */       return this.rotation;
+/*    */     }
+/*    */     
+/*    */     static {
+/* 24 */       CODEC = RecordCodecBuilder.create(i -> i.group((App)MapDecorationType.CODEC.fieldOf("type").forGetter(Entry::type), (App)Codec.DOUBLE.fieldOf("x").forGetter(Entry::x), (App)Codec.DOUBLE.fieldOf("z").forGetter(Entry::z), (App)Codec.FLOAT.fieldOf("rotation").forGetter(Entry::rotation)).apply((Applicative)i, Entry::new));
+/*    */     }
+/*    */   }
+/*    */ }
+
+
+/* Location:              C:\Users\karol\AppData\Roaming\ModrinthApp\meta\versions\26.2-0.19.5\26.2-0.19.5.jar!\net\minecraft\world\item\component\MapDecorations.class
+ * Java compiler version: 25 (69.0)
+ * JD-Core Version:       1.1.3
+ */

@@ -1,0 +1,43 @@
+/*    */ package net.minecraft.world.level.levelgen.feature;
+/*    */ 
+/*    */ import com.mojang.serialization.Codec;
+/*    */ import net.minecraft.core.BlockPos;
+/*    */ import net.minecraft.core.Vec3i;
+/*    */ import net.minecraft.world.level.ServerLevelAccessor;
+/*    */ import net.minecraft.world.level.block.Block;
+/*    */ import net.minecraft.world.level.block.Blocks;
+/*    */ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+/*    */ 
+/*    */ public class EndPlatformFeature extends Feature<NoneFeatureConfiguration> {
+/*    */   public EndPlatformFeature(Codec<NoneFeatureConfiguration> codec) {
+/* 12 */     super(codec);
+/*    */   }
+/*    */   
+/*    */   public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+/* 17 */     createEndPlatform((ServerLevelAccessor)context.level(), context.origin(), false);
+/* 18 */     return true;
+/*    */   }
+/*    */   
+/*    */   public static void createEndPlatform(ServerLevelAccessor newLevel, BlockPos origin, boolean dropResources) {
+/* 22 */     BlockPos.MutableBlockPos pos = origin.mutable();
+/* 24 */     for (int dz = -2; dz <= 2; dz++) {
+/* 25 */       for (int dx = -2; dx <= 2; dx++) {
+/* 26 */         for (int dy = -1; dy < 3; dy++) {
+/* 27 */           BlockPos.MutableBlockPos mutableBlockPos = pos.set((Vec3i)origin).move(dx, dy, dz);
+/* 28 */           Block block = (dy == -1) ? Blocks.OBSIDIAN : Blocks.AIR;
+/* 29 */           if (!newLevel.getBlockState((BlockPos)mutableBlockPos).is(block)) {
+/* 30 */             if (dropResources)
+/* 31 */               newLevel.destroyBlock((BlockPos)mutableBlockPos, true, null); 
+/* 33 */             newLevel.setBlock((BlockPos)mutableBlockPos, block.defaultBlockState(), 3);
+/*    */           } 
+/*    */         } 
+/*    */       } 
+/*    */     } 
+/*    */   }
+/*    */ }
+
+
+/* Location:              C:\Users\karol\AppData\Roaming\ModrinthApp\meta\versions\26.2-0.19.5\26.2-0.19.5.jar!\net\minecraft\world\level\levelgen\feature\EndPlatformFeature.class
+ * Java compiler version: 25 (69.0)
+ * JD-Core Version:       1.1.3
+ */

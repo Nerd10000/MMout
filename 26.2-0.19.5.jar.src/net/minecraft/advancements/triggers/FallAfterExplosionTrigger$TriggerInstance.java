@@ -1,0 +1,122 @@
+/*    */ package net.minecraft.advancements.triggers;
+/*    */ 
+/*    */ import com.mojang.datafixers.kinds.App;
+/*    */ import com.mojang.datafixers.kinds.Applicative;
+/*    */ import com.mojang.datafixers.util.Function4;
+/*    */ import com.mojang.serialization.Codec;
+/*    */ import com.mojang.serialization.codecs.RecordCodecBuilder;
+/*    */ import java.util.Optional;
+/*    */ import net.minecraft.advancements.predicates.ContextAwarePredicate;
+/*    */ import net.minecraft.advancements.predicates.DistancePredicate;
+/*    */ import net.minecraft.advancements.predicates.LocationPredicate;
+/*    */ import net.minecraft.advancements.predicates.entity.EntityPredicate;
+/*    */ import net.minecraft.server.level.ServerLevel;
+/*    */ import net.minecraft.world.level.storage.loot.LootContext;
+/*    */ import net.minecraft.world.level.storage.loot.Validatable;
+/*    */ import net.minecraft.world.level.storage.loot.ValidationContextSource;
+/*    */ import net.minecraft.world.phys.Vec3;
+/*    */ 
+/*    */ public final class TriggerInstance extends Record implements SimpleCriterionTrigger.SimpleInstance {
+/*    */   private final Optional<ContextAwarePredicate> player;
+/*    */   
+/*    */   private final Optional<LocationPredicate> startPosition;
+/*    */   
+/*    */   private final Optional<DistancePredicate> distance;
+/*    */   
+/*    */   private final Optional<ContextAwarePredicate> cause;
+/*    */   
+/*    */   public static final Codec<TriggerInstance> CODEC;
+/*    */   
+/*    */   public TriggerInstance(Optional<ContextAwarePredicate> player, Optional<LocationPredicate> startPosition, Optional<DistancePredicate> distance, Optional<ContextAwarePredicate> cause) {
+/* 32 */     this.player = player;
+/* 32 */     this.startPosition = startPosition;
+/* 32 */     this.distance = distance;
+/* 32 */     this.cause = cause;
+/*    */   }
+/*    */   
+/*    */   public final String toString() {
+/*    */     // Byte code:
+/*    */     //   0: aload_0
+/*    */     //   1: <illegal opcode> toString : (Lnet/minecraft/advancements/triggers/FallAfterExplosionTrigger$TriggerInstance;)Ljava/lang/String;
+/*    */     //   6: areturn
+/*    */     // Line number table:
+/*    */     //   Java source line number -> byte code offset
+/*    */     //   #32	-> 0
+/*    */     // Local variable table:
+/*    */     //   start	length	slot	name	descriptor
+/*    */     //   0	7	0	this	Lnet/minecraft/advancements/triggers/FallAfterExplosionTrigger$TriggerInstance;
+/*    */   }
+/*    */   
+/*    */   public final int hashCode() {
+/*    */     // Byte code:
+/*    */     //   0: aload_0
+/*    */     //   1: <illegal opcode> hashCode : (Lnet/minecraft/advancements/triggers/FallAfterExplosionTrigger$TriggerInstance;)I
+/*    */     //   6: ireturn
+/*    */     // Line number table:
+/*    */     //   Java source line number -> byte code offset
+/*    */     //   #32	-> 0
+/*    */     // Local variable table:
+/*    */     //   start	length	slot	name	descriptor
+/*    */     //   0	7	0	this	Lnet/minecraft/advancements/triggers/FallAfterExplosionTrigger$TriggerInstance;
+/*    */   }
+/*    */   
+/*    */   public final boolean equals(Object o) {
+/*    */     // Byte code:
+/*    */     //   0: aload_0
+/*    */     //   1: aload_1
+/*    */     //   2: <illegal opcode> equals : (Lnet/minecraft/advancements/triggers/FallAfterExplosionTrigger$TriggerInstance;Ljava/lang/Object;)Z
+/*    */     //   7: ireturn
+/*    */     // Line number table:
+/*    */     //   Java source line number -> byte code offset
+/*    */     //   #32	-> 0
+/*    */     // Local variable table:
+/*    */     //   start	length	slot	name	descriptor
+/*    */     //   0	8	0	this	Lnet/minecraft/advancements/triggers/FallAfterExplosionTrigger$TriggerInstance;
+/*    */     //   0	8	1	o	Ljava/lang/Object;
+/*    */   }
+/*    */   
+/*    */   public Optional<ContextAwarePredicate> player() {
+/* 32 */     return this.player;
+/*    */   }
+/*    */   
+/*    */   public Optional<LocationPredicate> startPosition() {
+/* 32 */     return this.startPosition;
+/*    */   }
+/*    */   
+/*    */   public Optional<DistancePredicate> distance() {
+/* 32 */     return this.distance;
+/*    */   }
+/*    */   
+/*    */   public Optional<ContextAwarePredicate> cause() {
+/* 32 */     return this.cause;
+/*    */   }
+/*    */   
+/*    */   static {
+/* 38 */     CODEC = RecordCodecBuilder.create(i -> i.group((App)EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player), (App)LocationPredicate.CODEC.optionalFieldOf("start_position").forGetter(TriggerInstance::startPosition), (App)DistancePredicate.CODEC.optionalFieldOf("distance").forGetter(TriggerInstance::distance), (App)EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("cause").forGetter(TriggerInstance::cause)).apply((Applicative)i, TriggerInstance::new));
+/*    */   }
+/*    */   
+/*    */   public static Criterion<TriggerInstance> fallAfterExplosion(DistancePredicate distance, EntityPredicate.Builder cause) {
+/* 46 */     return CriteriaTriggers.FALL_AFTER_EXPLOSION.createCriterion(new TriggerInstance(Optional.empty(), Optional.empty(), Optional.of(distance), Optional.of(EntityPredicate.wrap(cause))));
+/*    */   }
+/*    */   
+/*    */   public void validate(ValidationContextSource validator) {
+/* 51 */     super.validate(validator);
+/* 53 */     Validatable.validate(validator.entityContext(), "cause", this.cause);
+/*    */   }
+/*    */   
+/*    */   public boolean matches(ServerLevel level, Vec3 enteredPosition, Vec3 playerPosition, LootContext cause) {
+/* 57 */     if (this.startPosition.isPresent() && !((LocationPredicate)this.startPosition.get()).matches(level, enteredPosition.x, enteredPosition.y, enteredPosition.z))
+/* 58 */       return false; 
+/* 60 */     if (this.distance.isPresent() && !((DistancePredicate)this.distance.get()).matches(enteredPosition.x, enteredPosition.y, enteredPosition.z, playerPosition.x, playerPosition.y, playerPosition.z))
+/* 61 */       return false; 
+/* 63 */     if (this.cause.isPresent() && (cause == null || !((ContextAwarePredicate)this.cause.get()).matches(cause)))
+/* 64 */       return false; 
+/* 66 */     return true;
+/*    */   }
+/*    */ }
+
+
+/* Location:              C:\Users\karol\AppData\Roaming\ModrinthApp\meta\versions\26.2-0.19.5\26.2-0.19.5.jar!\net\minecraft\advancements\triggers\FallAfterExplosionTrigger$TriggerInstance.class
+ * Java compiler version: 25 (69.0)
+ * JD-Core Version:       1.1.3
+ */

@@ -1,0 +1,57 @@
+/*    */ package net.minecraft.commands.arguments;
+/*    */ 
+/*    */ import com.mojang.brigadier.Message;
+/*    */ import com.mojang.brigadier.StringReader;
+/*    */ import com.mojang.brigadier.arguments.ArgumentType;
+/*    */ import com.mojang.brigadier.context.CommandContext;
+/*    */ import com.mojang.brigadier.exceptions.CommandSyntaxException;
+/*    */ import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
+/*    */ import com.mojang.brigadier.suggestion.Suggestions;
+/*    */ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+/*    */ import java.util.Arrays;
+/*    */ import java.util.Collection;
+/*    */ import java.util.concurrent.CompletableFuture;
+/*    */ import net.minecraft.commands.CommandSourceStack;
+/*    */ import net.minecraft.commands.SharedSuggestionProvider;
+/*    */ import net.minecraft.network.chat.Component;
+/*    */ import net.minecraft.world.scores.TeamColor;
+/*    */ 
+/*    */ public class TeamColorArgument implements ArgumentType<TeamColor> {
+/* 20 */   private static final Collection<String> EXAMPLES = Arrays.asList(new String[] { "red", "green" });
+/*    */   
+/*    */   public static final DynamicCommandExceptionType ERROR_INVALID_VALUE;
+/*    */   
+/*    */   static {
+/* 21 */     ERROR_INVALID_VALUE = new DynamicCommandExceptionType(value -> Component.translatableEscape("argument.color.invalid", new Object[] { value }));
+/*    */   }
+/*    */   
+/*    */   public static TeamColorArgument teamColor() {
+/* 27 */     return new TeamColorArgument();
+/*    */   }
+/*    */   
+/*    */   public static TeamColor getTeamColor(CommandContext<CommandSourceStack> context, String name) {
+/* 31 */     return (TeamColor)context.getArgument(name, TeamColor.class);
+/*    */   }
+/*    */   
+/*    */   public TeamColor parse(StringReader reader) throws CommandSyntaxException {
+/* 36 */     String id = reader.readUnquotedString();
+/* 37 */     TeamColor result = TeamColor.byName(id);
+/* 38 */     if (result == null)
+/* 39 */       throw ERROR_INVALID_VALUE.createWithContext(reader, id); 
+/* 41 */     return result;
+/*    */   }
+/*    */   
+/*    */   public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> contextBuilder, SuggestionsBuilder builder) {
+/* 46 */     return SharedSuggestionProvider.suggest(TeamColor.VALUES.stream().map(TeamColor::getSerializedName), builder);
+/*    */   }
+/*    */   
+/*    */   public Collection<String> getExamples() {
+/* 51 */     return EXAMPLES;
+/*    */   }
+/*    */ }
+
+
+/* Location:              C:\Users\karol\AppData\Roaming\ModrinthApp\meta\versions\26.2-0.19.5\26.2-0.19.5.jar!\net\minecraft\commands\arguments\TeamColorArgument.class
+ * Java compiler version: 25 (69.0)
+ * JD-Core Version:       1.1.3
+ */
